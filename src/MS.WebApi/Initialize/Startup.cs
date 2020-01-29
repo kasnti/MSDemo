@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using MS.DbContexts;
+using MS.Models.Automapper;
 using MS.UnitOfWork;
 using MS.WebCore;
 
@@ -37,6 +32,9 @@ namespace MS.WebApi
 
             //注册工作单元（同时注册了DBContext）
             services.AddUnitOfWorkService<MSDbContext>(options => { options.UseMySql(Configuration.GetSection("ConectionStrings:MSDbContext").Value); });
+
+            //注册automapper服务
+            services.AddAutomapperService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
