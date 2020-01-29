@@ -1,6 +1,6 @@
-﻿using MS.Common.IDCode;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MS.Common.IDCode;
 using System;
 
 namespace MS.WebCore
