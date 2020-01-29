@@ -37,7 +37,13 @@ namespace MS.Models.ViewModel
                     }
                     break;
                 case ExecuteType.Update:
-                    //如果存在角色名，则返回报错
+                    //检查要更新的角色是否存在
+                    var row = repo.Find(Id);
+                    if (row is null)
+                    {
+                        return result.SetFailMessage("角色不存在");
+                    }
+                    //如果存在相同的角色名，则返回报错
                     if (repo.Exists(a => a.Name == Name && a.Id != Id))
                     {
                         return result.SetFailMessage($"已存在相同的角色名称：{Name}");
@@ -45,7 +51,7 @@ namespace MS.Models.ViewModel
                     break;
                 case ExecuteType.Create:
                 default:
-                    //如果存在角色名，则返回报错
+                    //如果存在相同的角色名，则返回报错
                     if (repo.Exists(a => a.Name == Name))
                     {
                         return result.SetFailMessage($"已存在相同的角色名称：{Name}");

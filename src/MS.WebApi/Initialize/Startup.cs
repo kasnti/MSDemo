@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MS.DbContexts;
 using MS.Models.Automapper;
+using MS.Services;
 using MS.UnitOfWork;
 using MS.WebCore;
 
@@ -35,6 +36,10 @@ namespace MS.WebApi
 
             //注册automapper服务
             services.AddAutomapperService();
+
+            //注册IBaseService和IRoleService接口及对应的实现类
+            services.AddScoped<IBaseService, BaseService>();
+            services.AddScoped<IRoleService, RoleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
