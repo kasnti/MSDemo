@@ -26,6 +26,13 @@ namespace MS.Models.ViewModel
         {
             ExecuteResult result = new ExecuteResult();
             var repo = unitOfWork.GetRepository<Role>();
+
+            //如果不是新增角色，操作之前都要先检查角色是否存在
+            if (executeType != ExecuteType.Create && !repo.Exists(a => a.Id == Id))
+            {
+                return result.SetFailMessage("角色不存在");
+            }
+
             //针对不同的操作，检查逻辑不同
             switch (executeType)
             {
@@ -37,13 +44,7 @@ namespace MS.Models.ViewModel
                     }
                     break;
                 case ExecuteType.Update:
-                    //检查要更新的角色是否存在
-                    var row = repo.Find(Id);
-                    if (row is null)
-                    {
-                        return result.SetFailMessage("角色不存在");
-                    }
-                    //如果存在相同的角色名，则返回报错
+                    //如果存在Id不同，角色名相同的实体，则返回报错
                     if (repo.Exists(a => a.Name == Name && a.Id != Id))
                     {
                         return result.SetFailMessage($"已存在相同的角色名称：{Name}");
