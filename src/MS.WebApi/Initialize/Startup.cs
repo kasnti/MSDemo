@@ -52,6 +52,8 @@ namespace MS.WebApi
 
             app.UseRouting();
 
+            app.UseCors(WebCoreExtensions.MyAllowSpecificOrigins);//Ìí¼Ó¿çÓò
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
