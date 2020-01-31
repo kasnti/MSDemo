@@ -7,36 +7,68 @@ namespace CommonTests
     {
         [Fact]
         [Trait("GetEnum", "itemName")]
-        public void ShouldGetEnumFromName()
+        public void GetEnum_EnumName_ReturnCorrespondEnum()
         {
-            Assert.Equal(StatusCode.Deleted, "Deleted".GetEnum<StatusCode>());
+            //Arrange
+            StatusCode statusCode = StatusCode.Deleted;
+
+            //Act
+            string actual = statusCode.ToString();
+
+            //Assert
+            Assert.Equal(statusCode, actual.GetEnum<StatusCode>());
         }
         [Fact]
         [Trait("GetEnum", "itemValue")]
-        public void ShouldGetEnumFromValue()
+        public void GetEnum_EnumValue_ReturnCorrespondEnum()
         {
-            Assert.Equal(StatusCode.Disable, 1.GetEnum<StatusCode>());
+            //Arrange
+            StatusCode statusCode = StatusCode.Disable;
+
+            //Act
+            int actual = statusCode.GetHashCode();
+
+            //Assert
+            Assert.Equal(statusCode, actual.GetEnum<StatusCode>());
         }
 
         [Fact]
         [Trait("GetEnumName", "itemValue")]
-        public void ShouldGetEnumNameFromValue()
+        public void GetEnumName_EnumValue_ReturnCorrespondEnumName()
         {
-            Assert.Equal(StatusCode.Enable.ToString(), 0.GetEnumName<StatusCode>());
+            //Arrange
+            StatusCode statusCode = StatusCode.Enable;
+
+            //Act
+            int actual = statusCode.GetHashCode();
+
+            //Assert
+            Assert.Equal(statusCode.ToString(), actual.GetEnumName<StatusCode>());
         }
 
         [Fact]
         [Trait("GetEnumValue", "itemName")]
-        public void ShouldGetEnumValueFromName()
+        public void GetEnumValue_EnumName_ReturnCorrespondEnumValue()
         {
-            Assert.Equal((int)StatusCode.Disable, "Disable".GetEnumValue<StatusCode>());
+            //Arrange
+            StatusCode statusCode = StatusCode.Disable;
+
+            //Act
+            string actual = statusCode.ToString();
+
+            //Assert
+            Assert.Equal(statusCode.GetHashCode(), actual.GetEnumValue<StatusCode>());
         }
 
         [Fact]
         [Trait("GetDescription", "Enum")]
-        public void ShouldGetDescriptionFromEnum()
+        public void GetDescription_Enum_ReturnCorrespondEnumDescription()
         {
-            Assert.Equal("已删除", StatusCode.Deleted.GetDescription());
+            //Arrange
+            StatusCode statusCode = StatusCode.Deleted;
+
+            //Assert
+            Assert.Equal("已删除", statusCode.GetDescription());
         }
     }
 }
