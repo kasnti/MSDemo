@@ -110,7 +110,7 @@ namespace MS.Component.Aop
         }
         private void LogExecuteInfo(IInvocation invocation, string result)
         {
-            _logger.LogDebug("方法{0}，返回值{1}", GetMethodInfo(invocation), result);
+            _logger.LogInformation("方法{0}，返回值{1}", GetMethodInfo(invocation), result);
         }
         private void LogExecuteError(Exception ex, IInvocation invocation)
         {
