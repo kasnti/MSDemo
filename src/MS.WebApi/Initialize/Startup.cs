@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MS.Component.Aop;
 using MS.DbContexts;
 using MS.Models.Automapper;
 using MS.Services;
@@ -35,8 +36,12 @@ namespace MS.WebApi
         public void ConfigureContainer(ContainerBuilder builder)
         {
             //注册IBaseService和IRoleService接口及对应的实现类
-            builder.RegisterType<BaseService>().As<IBaseService>().InstancePerLifetimeScope();
-            builder.RegisterType<RoleService>().As<IRoleService>().InstancePerLifetimeScope();
+            //builder.RegisterType<BaseService>().As<IBaseService>().InstancePerLifetimeScope();
+            //builder.RegisterType<RoleService>().As<IRoleService>().InstancePerLifetimeScope();
+
+            //注册aop拦截器 
+            //将业务层程序集名称传了进去，给业务层接口和实现做了注册，也给业务层各方法开启了代理
+            builder.AddAopService(ServiceExtensions.GetAssemblyName());
         }
         public IConfiguration Configuration { get; }
 
