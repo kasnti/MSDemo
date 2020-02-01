@@ -17,7 +17,7 @@ namespace MS.Services
         private readonly JwtService _jwtService;
         private readonly SiteSetting _siteSetting;
 
-        public AccountService(JwtService jwtService, IOptions<SiteSetting> options, IUnitOfWork<MSDbContext> unitOfWork, IMapper mapper, IdWorker idWorker) : base(unitOfWork, mapper, idWorker)
+        public AccountService(JwtService jwtService, IOptions<SiteSetting> options, IUnitOfWork<MSDbContext> unitOfWork, IMapper mapper, IdWorker idWorker, IClaimsAccessor claimsAccessor) : base(unitOfWork, mapper, idWorker, claimsAccessor)
         {
             _jwtService = jwtService;
             _siteSetting = options.Value;
