@@ -11,6 +11,7 @@ using MS.DbContexts;
 using MS.Models.Automapper;
 using MS.Services;
 using MS.UnitOfWork;
+using MS.WebApi.Filters;
 using MS.WebCore;
 
 namespace MS.WebApi
@@ -49,7 +50,11 @@ namespace MS.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<ApiResultFilter>();
+                options.Filters.Add<ApiExceptionFilter>();
+            });
 
             //×¢²á¿çÓò²ßÂÔ
             services.AddCorsPolicy(Configuration);
