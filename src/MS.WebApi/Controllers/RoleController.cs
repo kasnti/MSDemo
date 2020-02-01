@@ -8,7 +8,7 @@ namespace MS.WebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class RoleController : ControllerBase
+    public class RoleController : AuthorizeController
     {
         private readonly IRoleService _roleService;
 

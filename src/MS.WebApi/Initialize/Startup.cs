@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MS.Component.Aop;
+using MS.Component.Jwt;
 using MS.DbContexts;
 using MS.Models.Automapper;
 using MS.Services;
@@ -60,6 +61,9 @@ namespace MS.WebApi
 
             //注册automapper服务
             services.AddAutomapperService();
+
+            //注册jwt服务
+            services.AddJwtService(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +77,8 @@ namespace MS.WebApi
             app.UseRouting();
 
             app.UseCors(WebCoreExtensions.MyAllowSpecificOrigins);//添加跨域
+
+            app.UseAuthentication();//添加认证中间件
 
             app.UseAuthorization();
 
