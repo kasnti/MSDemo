@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MS.Common.IDCode;
+using MS.Component.Jwt.UserClaim;
 using MS.DbContexts;
 using MS.Entities;
 using MS.Models.ViewModel;
@@ -14,7 +15,7 @@ namespace MS.Services
 {
     public class RoleService : BaseService, IRoleService
     {
-        public RoleService(IUnitOfWork<MSDbContext> unitOfWork, IMapper mapper, IdWorker idWorker) : base(unitOfWork, mapper, idWorker)
+        public RoleService(IUnitOfWork<MSDbContext> unitOfWork, IMapper mapper, IdWorker idWorker, IClaimsAccessor claimsAccessor) : base(unitOfWork, mapper, idWorker, claimsAccessor)
         {
         }
 
@@ -30,7 +31,7 @@ namespace MS.Services
             {
                 Role newRow = _mapper.Map<Role>(viewModel);
                 newRow.Id = _idWorker.NextId();//获取一个雪花Id
-                newRow.Creator = 1219490056771866624;//由于暂时还没有做登录，所以拿不到登录者信息，先随便写一个后面再完善
+                newRow.Creator = _claimsAccessor.UserId;//拿到用户信息
                 newRow.CreateTime = DateTime.Now;
                 _unitOfWork.GetRepository<Role>().Insert(newRow);
                 await _unitOfWork.SaveChangesAsync();
@@ -69,7 +70,7 @@ namespace MS.Services
             row.Name = viewModel.Name;
             row.DisplayName = viewModel.DisplayName;
             row.Remark = viewModel.Remark;
-            row.Modifier = 1219490056771866624;//由于暂时还没有做登录，所以拿不到登录者信息，先随便写一个后面再完善
+            row.Modifier = _claimsAccessor.UserId;//拿到用户信息
             row.ModifyTime = DateTime.Now;
             _unitOfWork.GetRepository<Role>().Update(row);
             await _unitOfWork.SaveChangesAsync();//提交
