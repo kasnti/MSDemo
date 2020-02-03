@@ -13,6 +13,7 @@ using MS.Services;
 using MS.UnitOfWork;
 using MS.WebApi.Filters;
 using MS.WebCore;
+using MS.WebCore.MultiLanguages;
 
 namespace MS.WebApi
 {
@@ -50,11 +51,20 @@ namespace MS.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options =>
-            {
-                options.Filters.Add<ApiResultFilter>();
-                options.Filters.Add<ApiExceptionFilter>();
-            });
+            //添加多语言本地化支持
+            services.AddMultiLanguages();
+
+            services
+                .AddControllers(options =>
+                {
+                    options.Filters.Add<ApiResultFilter>();
+                    options.Filters.Add<ApiExceptionFilter>();
+                })
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    factory.Create(typeof(SharedResource));//给注解添加本地化资源提供器Localizerprovider
+                });
 
             //注册跨域策略
             services.AddCorsPolicy(Configuration);
@@ -78,6 +88,8 @@ namespace MS.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMultiLanguage(Configuration);//添加多语言本地化支持
 
             app.UseRouting();
 

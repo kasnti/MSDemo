@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Localization;
 using MS.Common.IDCode;
 using MS.Component.Jwt.UserClaim;
 using MS.DbContexts;
@@ -15,13 +16,15 @@ namespace MS.Services
         public readonly IMapper _mapper;
         public readonly IdWorker _idWorker;
         public readonly IClaimsAccessor _claimsAccessor;
+        public readonly IStringLocalizer _localizer;
 
-        public BaseService(IUnitOfWork<MSDbContext> unitOfWork, IMapper mapper, IdWorker idWorker, IClaimsAccessor claimsAccessor)
+        public BaseService(IUnitOfWork<MSDbContext> unitOfWork, IMapper mapper, IdWorker idWorker, IClaimsAccessor claimsAccessor, IStringLocalizer localizer)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _idWorker = idWorker;
             _claimsAccessor = claimsAccessor;
+            _localizer = localizer;
         }
     }
 }

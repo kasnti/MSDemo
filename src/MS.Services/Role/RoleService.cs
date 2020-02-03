@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Localization;
 using MS.Common.IDCode;
 using MS.Component.Jwt.UserClaim;
 using MS.DbContexts;
@@ -15,7 +16,7 @@ namespace MS.Services
 {
     public class RoleService : BaseService, IRoleService
     {
-        public RoleService(IUnitOfWork<MSDbContext> unitOfWork, IMapper mapper, IdWorker idWorker, IClaimsAccessor claimsAccessor) : base(unitOfWork, mapper, idWorker, claimsAccessor)
+        public RoleService(IUnitOfWork<MSDbContext> unitOfWork, IMapper mapper, IdWorker idWorker, IClaimsAccessor claimsAccessor, IStringLocalizer localizer) : base(unitOfWork, mapper, idWorker, claimsAccessor, localizer)
         {
         }
 
